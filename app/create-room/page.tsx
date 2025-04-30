@@ -4,14 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import socket from "@/lib/socket";
 import { useRouter } from "next/navigation";
+import { Room } from "@/lib/types";
+import { useRoom } from "@/providers/room-provider";
+import socket from "@/lib/socket";
 
 const Page = () => {
   const router = useRouter();
+  const {
+    state: { setRoom },
+  } = useRoom();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
+    ownerName: "",
     partnerName: "",
     phrase: "",
     repetitions: "",
@@ -23,10 +28,11 @@ const Page = () => {
     console.log(formData);
     setIsSubmitting(true);
 
-    socket.emit("create-room", formData, (roomId: string) => {
-      console.log(roomId);
-      if (roomId) {
-        router.push(`/link/${roomId}`);
+    socket.emit("create-room", formData, ({ room }: { room: Room }) => {
+      console.log(room);
+      if (room) {
+        setRoom(room);
+        router.push(`/link/${room.roomId}`);
       }
     });
   };
@@ -51,12 +57,12 @@ const Page = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-2">
-            <Label htmlFor="name">Your Name</Label>
+            <Label htmlFor="ownerName">Your Name</Label>
             <Input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="ownerName"
+              name="ownerName"
+              value={formData.ownerName}
               onChange={handleChange}
               placeholder="Enter your name"
               required

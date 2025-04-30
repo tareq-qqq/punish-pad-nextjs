@@ -1,9 +1,9 @@
 "use client";
 
-import socket from "@/lib/socket";
 import { Room } from "@/lib/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import socket from "@/lib/socket";
 
 const Page = () => {
   const params = useParams();

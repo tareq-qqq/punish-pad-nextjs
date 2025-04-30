@@ -1,13 +1,18 @@
 "use client";
+import { useRoom } from "@/providers/room-provider";
 import socket from "@/lib/socket";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+// check later if the room is not available to show an error
 const Page = () => {
-  const params = useParams();
+  const params = useParams<{ id: string }>();
   const router = useRouter();
   const { id } = params;
-
+  const {
+    state: { room },
+    errorState: { error },
+  } = useRoom(id);
   useEffect(() => {
     console.log("mounted");
     socket.on("joined-room", (room: string, socketId: string) => {
@@ -17,10 +22,20 @@ const Page = () => {
         router.push(`/room/${id}`);
       }
     });
-  }, [id, router]);
+  }, [id, router, socket]);
+
+  if (error) {
+    return (
+      <div>
+        <p>Error: {error}</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <p>Waiting for the other person to join the room...</p>
+      <code>{JSON.stringify(room, null, 2)}</code>
       <p>http://localhost:3000/p/room/{params.id}</p>
     </div>
   );

@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import socket from "@/lib/socket";
 import { useParams } from "next/navigation";
 import { Room } from "@/lib/types";
 import { Input } from "@/components/ui/input";
+import socket from "@/lib/socket";
+
 const Page = () => {
   const params = useParams();
   const [room, setRoom] = useState<Room | null>(null);
