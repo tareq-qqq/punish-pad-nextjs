@@ -7,6 +7,7 @@ const Page = () => {
   const params = useParams();
   const router = useRouter();
   const { id } = params;
+
   useEffect(() => {
     console.log("mounted");
     socket.on("joined-room", (room: string, socketId: string) => {

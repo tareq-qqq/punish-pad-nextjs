@@ -22,7 +22,8 @@ const Page = () => {
     // Handle form submission here
     console.log(formData);
     setIsSubmitting(true);
-    socket.emit("createRoom", formData, (roomId: string) => {
+
+    socket.emit("create-room", formData, (roomId: string) => {
       console.log(roomId);
       if (roomId) {
         router.push(`/link/${roomId}`);

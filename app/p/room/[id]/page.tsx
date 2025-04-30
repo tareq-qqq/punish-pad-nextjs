@@ -12,7 +12,7 @@ const Page = () => {
 
   useEffect(() => {
     socket.emit(
-      "joinRoom",
+      "join-room",
       params.id,
       ({ room, error }: { room?: Room; error?: string }) => {
         if (error) {
