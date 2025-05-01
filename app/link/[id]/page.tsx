@@ -13,6 +13,7 @@ const Page = () => {
     state: { room },
     errorState: { error },
   } = useRoom(id);
+
   useEffect(() => {
     console.log("mounted");
     socket.on("joined-room", (room: string, socketId: string) => {
@@ -22,7 +23,7 @@ const Page = () => {
         router.push(`/room/${id}`);
       }
     });
-  }, [id, router, socket]);
+  }, [id, router]);
 
   if (error) {
     return (

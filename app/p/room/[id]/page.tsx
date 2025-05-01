@@ -1,32 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { Room } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import socket from "@/lib/socket";
+import { useRoom } from "@/providers/room-provider";
+import { useParams } from "next/navigation";
 
 const Page = () => {
-  const params = useParams();
-  const [room, setRoom] = useState<Room | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [currentPhrase, setCurrentPhrase] = useState<string>("");
-
-  useEffect(() => {
-    socket.emit(
-      "join-room",
-      params.id,
-      ({ room, error }: { room?: Room; error?: string }) => {
-        if (error) {
-          setError(error);
-          console.error(error);
-          return;
-        }
-        if (room) {
-          setRoom(room);
-        }
-      },
-    );
-  }, [params.id]);
+  const params = useParams<{ id: string }>();
+  const {
+    state: { room, setRoom },
+    errorState: { error },
+  } = useRoom(params.id);
 
   if (error) {
     return <div>{error}</div>;
@@ -40,9 +23,9 @@ const Page = () => {
       <div>{JSON.stringify(room, null, 2)}</div>;
       <Input
         type="text"
-        value={currentPhrase}
+        value={room.currentPhrase}
         onChange={(e) => {
-          setCurrentPhrase(e.target.value);
+          setRoom({ ...room, currentPhrase: e.target.value });
           socket.emit("typing", params.id, e.target.value);
         }}
       />

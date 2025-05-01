@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import socket from "@/lib/socket";
+import { Socket } from "socket.io-client";
 interface RoomContext {
   state: {
     room: Room | null;
@@ -43,7 +44,7 @@ export const useRoom = (roomId?: string) => {
         },
       );
     }
-  }, [context, roomId, socket]);
+  }, [context, roomId]);
 
   return context;
 };
@@ -51,6 +52,15 @@ export const useRoom = (roomId?: string) => {
 const RoomProvider = ({ children }: { children: React.ReactNode }) => {
   const [room, setRoom] = useState<Room | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    socket.on("disconnect", () => {
+      console.log("disconnected", socket.id);
+      setRoom(null);
+      setError("Disconnected from room");
+    });
+  }, []);
+
   return (
     <RoomContext.Provider
       value={{ state: { room, setRoom }, errorState: { error, setError } }}

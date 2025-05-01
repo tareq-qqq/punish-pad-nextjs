@@ -13,6 +13,7 @@ const Page = () => {
   const router = useRouter();
   const {
     state: { setRoom },
+    errorState: { setError },
   } = useRoom();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -32,6 +33,7 @@ const Page = () => {
       console.log(room);
       if (room) {
         setRoom(room);
+        setError(null);
         router.push(`/link/${room.roomId}`);
       }
     });
