@@ -29,7 +29,7 @@ const Goal = ({
         <span className="ml-2 px-3 py-1 text-2xl">{repetitions} times</span>
       </p>
 
-      <Separator className="mx-auto my-4 max-w-3/4" />
+      <Separator className="mx-auto my-4 max-w-9/10" />
     </div>
   );
 };
