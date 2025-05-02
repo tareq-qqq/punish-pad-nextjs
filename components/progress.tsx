@@ -1,7 +1,6 @@
 import socket from "@/lib/socket";
 import { useEffect, useState } from "react";
 import { Progress as ProgressBar } from "./ui/progress";
-import { Separator } from "@/components/ui/separator";
 
 const Progress = ({
   initialHits,
