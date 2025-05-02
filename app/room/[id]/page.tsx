@@ -1,5 +1,6 @@
 "use client";
 
+import Clients from "@/components/clients";
 import Messages from "@/components/messages";
 import Progress from "@/components/progress";
 import socket from "@/lib/socket";
@@ -33,6 +34,7 @@ const Page = () => {
 
   return (
     <div>
+      <Clients ownerName={room.ownerName} partnerName={room.partnerName} />
       <Progress initialHits={room.hits} initialMisses={room.misses} />
       <Messages />
     </div>

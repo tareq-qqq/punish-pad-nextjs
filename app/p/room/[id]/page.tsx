@@ -5,6 +5,7 @@ import { useRoom } from "@/providers/room-provider";
 import { useParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import PhraseInput from "./components/phrase-input";
+import Clients from "@/components/clients";
 
 const Page = () => {
   const params = useParams<{ id: string }>();
@@ -38,6 +39,8 @@ const Page = () => {
   return (
     <div>
       {/* <div>{JSON.stringify(room, null, 2)}</div>;<div></div> */}
+      <Clients ownerName={room.ownerName} partnerName={room.partnerName} />
+      {/* <Goal phrase={room.phrase} /> */}
       <Progress initialHits={room.hits} initialMisses={room.misses} />
       <Messages />
       <PhraseInput roomId={params.id} currentPhrase={room.currentPhrase} />
