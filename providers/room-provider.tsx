@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 import socket from "@/lib/socket";
-import { Socket } from "socket.io-client";
 interface RoomContext {
   state: {
     room: Room | null;

@@ -1,30 +1,26 @@
 "use client";
 
+import Progress from "@/components/progress";
 import socket from "@/lib/socket";
 import { useRoom } from "@/providers/room-provider";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const Page = () => {
   const params = useParams<{ id: string }>();
   const {
-    state: { room },
+    state: { room, setRoom },
     errorState: { error },
   } = useRoom(params.id);
 
-  const [text, setText] = useState(room?.currentPhrase);
-
-  useEffect(() => {
-    if (room) {
-      setText(room.currentPhrase);
-    }
-  }, [room]);
-
   useEffect(() => {
     socket.on("typing", (text: string) => {
-      setText(text);
+      setRoom((room) => {
+        if (!room) return null;
+        return { ...room, currentPhrase: text };
+      });
     });
-  }, []);
+  }, [setRoom]);
 
   if (error) {
     return <div>{error}</div>;
@@ -37,7 +33,8 @@ const Page = () => {
   return (
     <div>
       <p>{JSON.stringify(room, null, 2)}</p>
-      <div>{text}</div>
+      <Progress />
+      <div>{room.currentPhrase}</div>
     </div>
   );
 };
