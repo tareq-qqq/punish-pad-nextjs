@@ -7,8 +7,8 @@ const Clients = ({
 }) => {
   return (
     <div>
-      <p>{ownerName}</p>
-      <p>{partnerName}</p>
+      <p>Owner: {ownerName}</p>
+      <p>Punished: {partnerName}</p>
     </div>
   );
 };

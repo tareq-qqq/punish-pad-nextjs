@@ -6,6 +6,7 @@ import { useParams, usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const Messages = () => {
   const { id: roomId } = useParams<{ id: string }>();
@@ -62,7 +63,12 @@ const Messages = () => {
     >
       {room?.messages.map((message) => (
         <div key={message.id} className="grid grid-cols-[1fr_auto] gap-2">
-          <p className="max-w-[70ch] break-all whitespace-pre-wrap">
+          <p
+            className={cn(
+              "max-w-[70ch] break-all whitespace-pre-wrap",
+              message.correct ? "text-green-600" : "text-red-600",
+            )}
+          >
             {message.content}
           </p>
           <p className="text-sm">{format(message.createdAt, "hh:mm a")}</p>
