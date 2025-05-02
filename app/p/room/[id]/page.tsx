@@ -1,14 +1,13 @@
 "use client";
+import Goal from "@/components/goal";
 import Messages from "@/components/messages";
 import Progress from "@/components/progress";
+import socket from "@/lib/socket";
 import { useRoom } from "@/providers/room-provider";
 import { useParams } from "next/navigation";
 import { useEffect, useRef } from "react";
-import PhraseInput from "./components/phrase-input";
-import Clients from "@/components/clients";
-import Goal from "@/components/goal";
-import socket from "@/lib/socket";
 import { toast } from "sonner";
+import PhraseInput from "./components/phrase-input";
 
 const Page = () => {
   const params = useParams<{ id: string }>();
@@ -40,29 +39,60 @@ const Page = () => {
   }, []);
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center p-4">
+        <div className="rounded-lg bg-red-50 p-4 text-center dark:bg-red-950">
+          <p className="text-lg font-medium text-red-600 dark:text-red-400">
+            {error}
+          </p>
+        </div>
+      </div>
+    );
   }
   if (!room) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-muted-foreground text-lg font-medium">
+          Loading...
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      {/* <div>{JSON.stringify(room, null, 2)}</div>;<div></div> */}
-      <Clients ownerName={room.ownerName} partnerName={room.partnerName} />
-      <Goal phrase={room.phrase} repetitions={room.repetition} />
-      <Progress initialHits={room.hits} initialMisses={room.misses} />
-      <Messages />
-      <PhraseInput
-        roomId={params.id}
-        currentPhrase={room.currentPhrase}
-        roomStatus={room.status}
-      />
+    <main className="bg-background container mx-auto grid min-h-screen max-w-2xl grid-rows-[auto_1fr_auto] space-y-2 px-4 py-4">
+      <div>
+        <Goal
+          phrase={room.phrase}
+          repetitions={room.repetition}
+          owner={room.ownerName}
+          punished={room.partnerName}
+        />
 
-      {room?.status === "finished" && (
-        <p>You&apos;re done wait for your owner to create a new room.</p>
+        <Progress
+          initialHits={room.hits}
+          initialMisses={room.misses}
+          total={room.repetition}
+        />
+      </div>
+
+      <Messages />
+
+      {room?.status === "finished" ? (
+        <div className="rounded-lg bg-green-50 p-3 text-center dark:bg-green-950">
+          <p className="text-sm text-green-700 dark:text-green-300">
+            You&apos;re done! Wait for your owner to create a new room.
+          </p>
+        </div>
+      ) : (
+        <PhraseInput
+          roomId={params.id}
+          currentPhrase={room.currentPhrase}
+          roomStatus={room.status}
+        />
       )}
-    </div>
+    </main>
   );
 };
+
 export default Page;

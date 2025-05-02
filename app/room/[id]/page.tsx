@@ -1,6 +1,5 @@
 "use client";
 
-import Clients from "@/components/clients";
 import Goal from "@/components/goal";
 import Messages from "@/components/messages";
 import Progress from "@/components/progress";
@@ -35,29 +34,59 @@ const Page = () => {
   }, [room?.partnerName, room?.status]);
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center p-4">
+        <div className="rounded-lg bg-red-50 p-4 text-center dark:bg-red-950">
+          <p className="text-lg font-medium text-red-600 dark:text-red-400">
+            {error}
+          </p>
+        </div>
+      </div>
+    );
   }
 
   if (!room) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-muted-foreground text-lg font-medium">
+          Loading...
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <Goal phrase={room.phrase} repetitions={room.repetition} />
-      <Clients ownerName={room.ownerName} partnerName={room.partnerName} />
-      <Progress initialHits={room.hits} initialMisses={room.misses} />
+    <main className="bg-background container mx-auto grid min-h-screen max-w-2xl grid-rows-[auto_1fr_auto_auto] space-y-4 px-2 py-4">
+      <div>
+        <Goal
+          phrase={room.phrase}
+          repetitions={room.repetition}
+          owner={room.ownerName}
+          punished={room.partnerName}
+        />
+        <Progress
+          initialHits={room.hits}
+          initialMisses={room.misses}
+          total={room.repetition}
+        />
+      </div>
       <Messages />
       <MessageInput roomId={params.id} />
       {room?.status === "finished" && (
-        <p>
-          Your partner has finished their punishment.{" "}
-          <Link className="underline" href={"/create-room"}>
-            Create a new room.
-          </Link>
-        </p>
+        <div className="rounded-lg bg-green-50 p-3 text-center dark:bg-green-950">
+          <p className="text-sm text-green-700 dark:text-green-300">
+            Your partner has finished their punishment.{" "}
+            <Link
+              className="font-medium underline hover:text-green-800 dark:hover:text-green-200"
+              href={"/create-room"}
+            >
+              Create a new room
+            </Link>
+          </p>
+        </div>
       )}
-    </div>
+    </main>
   );
 };
+
 export default Page;
