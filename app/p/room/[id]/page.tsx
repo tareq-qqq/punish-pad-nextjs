@@ -38,7 +38,7 @@ const Page = () => {
   return (
     <div>
       {/* <div>{JSON.stringify(room, null, 2)}</div>;<div></div> */}
-      <Progress />
+      <Progress initialHits={room.hits} initialMisses={room.misses} />
       <Messages />
       <PhraseInput roomId={params.id} currentPhrase={room.currentPhrase} />
     </div>
