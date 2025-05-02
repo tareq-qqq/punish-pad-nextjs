@@ -59,7 +59,7 @@ const Messages = () => {
     <>
       <ScrollArea
         id="scrollarea"
-        className="my-4 w-full scroll-smooth rounded-md border px-2"
+        className="my-4 min-h-[12rem] w-full scroll-smooth rounded-md border px-2"
         ref={scrollAreaRef}
         type="always"
       >

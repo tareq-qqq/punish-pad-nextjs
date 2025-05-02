@@ -47,6 +47,7 @@ const PhraseInput = ({
         ref={inputRef}
         type="text"
         value={text}
+        placeholder="Start typing..."
         onChange={(e) => {
           setText(e.target.value);
           socket.emit("typing", roomId, e.target.value);
