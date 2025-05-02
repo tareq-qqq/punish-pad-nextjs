@@ -1,5 +1,6 @@
 "use client";
 
+import Messages from "@/components/messages";
 import Progress from "@/components/progress";
 import socket from "@/lib/socket";
 import { useRoom } from "@/providers/room-provider";
@@ -32,9 +33,9 @@ const Page = () => {
 
   return (
     <div>
-      <p>{JSON.stringify(room, null, 2)}</p>
+      {/* <p>{JSON.stringify(room, null, 2)}</p> */}
       <Progress />
-      <div>{room.currentPhrase}</div>
+      <Messages />
     </div>
   );
 };

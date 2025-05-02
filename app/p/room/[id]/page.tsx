@@ -1,4 +1,5 @@
 "use client";
+import Messages from "@/components/messages";
 import Progress from "@/components/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,7 +43,7 @@ const Page = () => {
     if (value?.trim() === "" || !value) {
       return;
     }
-    socket.emit("submit-phrase", params.id, inputRef.current?.value.trim());
+    socket.emit("submit-phrase", params.id, inputRef.current?.value);
     socket.emit("typing", params.id, "");
     setRoom((room) => {
       if (!room) return null;
@@ -54,10 +55,12 @@ const Page = () => {
 
   return (
     <div>
-      <div>{JSON.stringify(room, null, 2)}</div>;<div></div>
+      {/* <div>{JSON.stringify(room, null, 2)}</div>;<div></div> */}
       <Progress />
+      <Messages />
       <form className="flex gap-2" onSubmit={handleSubmit}>
         <Input
+          autoFocus
           ref={inputRef}
           type="text"
           value={room.currentPhrase}
