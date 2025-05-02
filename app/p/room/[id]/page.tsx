@@ -41,7 +41,7 @@ const Page = () => {
     <div>
       {/* <div>{JSON.stringify(room, null, 2)}</div>;<div></div> */}
       <Clients ownerName={room.ownerName} partnerName={room.partnerName} />
-      <Goal phrase={room.phrase} />
+      <Goal phrase={room.phrase} repetitions={room.repetition} />
       <Progress initialHits={room.hits} initialMisses={room.misses} />
       <Messages />
       <PhraseInput roomId={params.id} currentPhrase={room.currentPhrase} />

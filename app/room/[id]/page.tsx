@@ -35,7 +35,7 @@ const Page = () => {
 
   return (
     <div>
-      <Goal phrase={room.phrase} />
+      <Goal phrase={room.phrase} repetitions={room.repetition} />
       <Clients ownerName={room.ownerName} partnerName={room.partnerName} />
       <Progress initialHits={room.hits} initialMisses={room.misses} />
       <Messages />
