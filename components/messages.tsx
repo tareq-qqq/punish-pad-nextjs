@@ -60,7 +60,7 @@ const Messages = () => {
       type="always"
     >
       {room?.messages.map((message) => (
-        <div key={message.id} className="flex items-end justify-between gap-2">
+        <div key={message.id} className="grid grid-cols-[1fr_auto] gap-2">
           <p className="max-w-[70ch] break-all whitespace-pre-wrap">
             {message.content}
           </p>
