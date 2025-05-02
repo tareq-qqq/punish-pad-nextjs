@@ -31,7 +31,7 @@ const PhraseInput = ({
     if (value?.trim() === "" || !value) {
       return;
     }
-    socket.emit("submit-phrase", roomId, inputRef.current?.value);
+    socket.emit("submit-phrase", roomId, inputRef.current?.value, new Date());
     socket.emit("typing", roomId, "");
     setText("");
     // inputRef.current!.value = "";

@@ -33,7 +33,6 @@ const Page = () => {
 
   return (
     <div>
-      {/* <p>{JSON.stringify(room, null, 2)}</p> */}
       <Progress initialHits={room.hits} initialMisses={room.misses} />
       <Messages />
     </div>
