@@ -5,7 +5,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <RoomProvider>
       {children}
-      <Toaster />
+      <Toaster position="top-center" />
     </RoomProvider>
   );
 };

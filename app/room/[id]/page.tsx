@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import MessageInput from "./components/message-input";
 
 const Page = () => {
   const params = useParams<{ id: string }>();
@@ -47,6 +48,7 @@ const Page = () => {
       <Clients ownerName={room.ownerName} partnerName={room.partnerName} />
       <Progress initialHits={room.hits} initialMisses={room.misses} />
       <Messages />
+      <MessageInput roomId={params.id} />
       {room?.status === "finished" && (
         <p>
           Your partner has finished their punishment.{" "}

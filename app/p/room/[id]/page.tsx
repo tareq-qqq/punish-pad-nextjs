@@ -7,6 +7,8 @@ import { useEffect, useRef } from "react";
 import PhraseInput from "./components/phrase-input";
 import Clients from "@/components/clients";
 import Goal from "@/components/goal";
+import socket from "@/lib/socket";
+import { toast } from "sonner";
 
 const Page = () => {
   const params = useParams<{ id: string }>();
@@ -29,6 +31,13 @@ const Page = () => {
       input?.removeEventListener("paste", onPaste);
     };
   });
+
+  useEffect(() => {
+    socket.on("punishment-message", (roomId: string, message: string) => {
+      console.log(message);
+      toast.message(message);
+    });
+  }, []);
 
   if (error) {
     return <div>{error}</div>;
