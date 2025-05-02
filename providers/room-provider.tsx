@@ -58,6 +58,14 @@ const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       setRoom(null);
       setError("Disconnected from room");
     });
+
+    socket.on("room-finished", (roomId: string) => {
+      console.log("room-finished", roomId);
+      setRoom((room) => {
+        if (!room) return null;
+        return { ...room, status: "finished" };
+      });
+    });
   }, []);
 
   return (

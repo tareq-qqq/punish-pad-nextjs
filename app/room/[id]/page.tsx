@@ -6,8 +6,10 @@ import Messages from "@/components/messages";
 import Progress from "@/components/progress";
 import socket from "@/lib/socket";
 import { useRoom } from "@/providers/room-provider";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 const Page = () => {
   const params = useParams<{ id: string }>();
@@ -25,6 +27,12 @@ const Page = () => {
     });
   }, [setRoom]);
 
+  useEffect(() => {
+    if (room?.status === "finished") {
+      toast.success(`${room.partnerName} has finished the punishment`);
+    }
+  }, [room?.partnerName, room?.status]);
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -39,6 +47,14 @@ const Page = () => {
       <Clients ownerName={room.ownerName} partnerName={room.partnerName} />
       <Progress initialHits={room.hits} initialMisses={room.misses} />
       <Messages />
+      {room?.status === "finished" && (
+        <p>
+          Your partner has finished their punishment.{" "}
+          <Link className="underline" href={"/create-room"}>
+            Create a new room.
+          </Link>
+        </p>
+      )}
     </div>
   );
 };

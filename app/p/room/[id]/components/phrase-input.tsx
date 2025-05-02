@@ -6,9 +6,11 @@ import { useEffect, useRef, useState } from "react";
 const PhraseInput = ({
   roomId,
   currentPhrase,
+  roomStatus,
 }: {
   roomId: string;
   currentPhrase: string;
+  roomStatus: string;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [text, setText] = useState<string>(currentPhrase);
@@ -48,8 +50,11 @@ const PhraseInput = ({
           setText(e.target.value);
           socket.emit("typing", roomId, e.target.value);
         }}
+        disabled={roomStatus === "finished"}
       />
-      <Button type="submit">Submit</Button>
+      <Button type="submit" disabled={roomStatus === "finished"}>
+        Submit
+      </Button>
     </form>
   );
 };

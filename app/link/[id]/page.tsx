@@ -10,7 +10,6 @@ const Page = () => {
   const router = useRouter();
   const { id } = params;
   const {
-    state: { room },
     errorState: { error },
   } = useRoom(id);
 
@@ -36,7 +35,6 @@ const Page = () => {
   return (
     <div>
       <p>Waiting for the other person to join the room...</p>
-      <code>{JSON.stringify(room, null, 2)}</code>
       <p>http://localhost:3000/p/room/{params.id}</p>
     </div>
   );

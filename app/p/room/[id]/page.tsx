@@ -44,7 +44,15 @@ const Page = () => {
       <Goal phrase={room.phrase} repetitions={room.repetition} />
       <Progress initialHits={room.hits} initialMisses={room.misses} />
       <Messages />
-      <PhraseInput roomId={params.id} currentPhrase={room.currentPhrase} />
+      <PhraseInput
+        roomId={params.id}
+        currentPhrase={room.currentPhrase}
+        roomStatus={room.status}
+      />
+
+      {room?.status === "finished" && (
+        <p>You&apos;re done wait for your owner to create a new room.</p>
+      )}
     </div>
   );
 };

@@ -1,6 +1,12 @@
+import { Toaster } from "@/components/ui/sonner";
 import RoomProvider from "./room-provider";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
-  return <RoomProvider>{children}</RoomProvider>;
+  return (
+    <RoomProvider>
+      {children}
+      <Toaster />
+    </RoomProvider>
+  );
 };
 export default Providers;

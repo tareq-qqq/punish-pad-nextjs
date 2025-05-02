@@ -32,6 +32,7 @@ const Messages = () => {
     scrollAreaRef.current?.scrollTo({
       top: scrollAreaRef.current?.scrollHeight,
     });
+    console.log(room?.status);
   }, [room]);
 
   // Debounce cursor display based on currentPhrase stability
@@ -67,7 +68,7 @@ const Messages = () => {
           <p className="text-sm">{format(message.createdAt, "hh:mm a")}</p>
         </div>
       ))}
-      {pathname === `/room/${roomId}` && (
+      {pathname === `/room/${roomId}` && room?.status !== "finished" && (
         <p className="max-w-[70ch]">
           <span className="break-all whitespace-pre-wrap">
             {room?.currentPhrase}
