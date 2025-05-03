@@ -8,7 +8,8 @@ const MessageInput = ({ roomId }: { roomId: string }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [text, setText] = useState<string>("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     inputRef.current?.focus();
     const value = inputRef.current?.value;
     if (value?.trim() === "" || !value) {
@@ -17,11 +18,15 @@ const MessageInput = ({ roomId }: { roomId: string }) => {
     socket.emit("punishment-message", roomId, inputRef.current?.value);
     setText("");
   };
-
   return (
-    <div className="flex gap-2 px-2">
+    <form
+      className="flex gap-2 px-2"
+      onSubmit={handleSubmit}
+      autoComplete="off"
+    >
       <Input
         autoFocus
+        name="message"
         ref={inputRef}
         type="text"
         value={text}
@@ -30,13 +35,13 @@ const MessageInput = ({ roomId }: { roomId: string }) => {
           setText(e.target.value);
         }}
       />
-      <Button type="button" onClick={handleSubmit}>
+      <Button type="submit">
         <span className="hidden md:block">Send</span>
         <span className="block">
           <Send />
         </span>
       </Button>
-    </div>
+    </form>
   );
 };
 export default MessageInput;
