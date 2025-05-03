@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import MessageInput from "./components/message-input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Page = () => {
   const params = useParams<{ id: string }>();
@@ -56,36 +57,42 @@ const Page = () => {
   }
 
   return (
-    <main className="bg-background container mx-auto grid min-h-screen max-w-2xl grid-rows-[auto_1fr_auto_auto] space-y-4 px-2 py-4">
-      <div>
-        <Goal
-          phrase={room.phrase}
-          repetitions={room.repetition}
-          owner={room.ownerName}
-          punished={room.partnerName}
-        />
-        <Progress
-          initialHits={room.hits}
-          initialMisses={room.misses}
-          total={room.repetition}
-        />
-      </div>
-      <Messages />
-      <MessageInput roomId={params.id} />
-      {room?.status === "finished" && (
-        <div className="rounded-lg bg-green-50 p-3 text-center dark:bg-green-950">
-          <p className="text-sm text-green-700 dark:text-green-300">
-            Your partner has finished their punishment.{" "}
-            <Link
-              className="font-medium underline hover:text-green-800 dark:hover:text-green-200"
-              href={"/create-room"}
-            >
-              Create a new room
-            </Link>
-          </p>
+    <ScrollArea className="h-screen px-4">
+      <main className="bg-background h-screen pt-4">
+        <div className="container mx-auto grid h-full max-w-2xl grid-rows-[auto_1fr_auto]">
+          <div>
+            <Goal
+              phrase={room.phrase}
+              repetitions={room.repetition}
+              owner={room.ownerName}
+              punished={room.partnerName}
+            />
+            <Progress
+              initialHits={room.hits}
+              initialMisses={room.misses}
+              total={room.repetition}
+            />
+          </div>
+          <Messages />
+          <MessageInput roomId={params.id} />
+          <div className="mt-4 pb-4">
+            {room?.status === "finished" && (
+              <div className="rounded-lg bg-green-50 p-3 dark:bg-green-950">
+                <p className="text-sm text-green-700 dark:text-green-300">
+                  Your partner has finished their punishment.{" "}
+                  <Link
+                    className="font-medium underline hover:text-green-800 dark:hover:text-green-200"
+                    href={"/create-room"}
+                  >
+                    Create a new room
+                  </Link>
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-      )}
-    </main>
+      </main>
+    </ScrollArea>
   );
 };
 

@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 import PhraseInput from "./components/phrase-input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Page = () => {
   const params = useParams<{ id: string }>();
@@ -60,38 +61,44 @@ const Page = () => {
   }
 
   return (
-    <main className="bg-background container mx-auto grid min-h-screen max-w-2xl grid-rows-[auto_1fr_auto] space-y-2 px-4 py-4">
-      <div>
-        <Goal
-          phrase={room.phrase}
-          repetitions={room.repetition}
-          owner={room.ownerName}
-          punished={room.partnerName}
-        />
+    <ScrollArea className="h-screen px-4">
+      <main className="bg-background h-screen pt-4">
+        <div className="container mx-auto grid h-full max-w-2xl grid-rows-[auto_1fr_auto]">
+          <div>
+            <Goal
+              phrase={room.phrase}
+              repetitions={room.repetition}
+              owner={room.ownerName}
+              punished={room.partnerName}
+            />
 
-        <Progress
-          initialHits={room.hits}
-          initialMisses={room.misses}
-          total={room.repetition}
-        />
-      </div>
+            <Progress
+              initialHits={room.hits}
+              initialMisses={room.misses}
+              total={room.repetition}
+            />
+          </div>
 
-      <Messages />
+          <Messages />
 
-      {room?.status === "finished" ? (
-        <div className="rounded-lg bg-green-50 p-3 text-center dark:bg-green-950">
-          <p className="text-sm text-green-700 dark:text-green-300">
-            You&apos;re done! Wait for your owner to create a new room.
-          </p>
+          <div className="pb-4">
+            {room?.status === "finished" ? (
+              <div className="rounded-lg bg-green-50 p-3 text-center dark:bg-green-950">
+                <p className="text-sm text-green-700 dark:text-green-300">
+                  You&apos;re done! Wait for your owner to create a new room.
+                </p>
+              </div>
+            ) : (
+              <PhraseInput
+                roomId={params.id}
+                currentPhrase={room.currentPhrase}
+                roomStatus={room.status}
+              />
+            )}
+          </div>
         </div>
-      ) : (
-        <PhraseInput
-          roomId={params.id}
-          currentPhrase={room.currentPhrase}
-          roomStatus={room.status}
-        />
-      )}
-    </main>
+      </main>
+    </ScrollArea>
   );
 };
 

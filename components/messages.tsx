@@ -61,6 +61,7 @@ const Messages = () => {
         id="scrollarea"
         className="my-4 min-h-[12rem] w-full scroll-smooth rounded-md border px-2"
         ref={scrollAreaRef}
+        viewPortStyles="py-2 "
         type="always"
       >
         {room?.messages.length === 0 && (
