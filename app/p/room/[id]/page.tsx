@@ -9,6 +9,11 @@ import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 import PhraseInput from "./components/phrase-input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Viewport } from "next";
+
+export const viewport: Viewport = {
+  interactiveWidget: "resizes-content",
+};
 
 const Page = () => {
   const params = useParams<{ id: string }>();
