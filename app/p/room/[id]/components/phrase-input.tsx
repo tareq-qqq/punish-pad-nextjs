@@ -38,14 +38,14 @@ const PhraseInput = ({
     socket.emit("typing", roomId, "");
     setText("");
     // inputRef.current!.value = "";
-    inputRef.current!.focus();
   };
   return (
     <form className="flex gap-2 px-2" onSubmit={handleSubmit}>
       <Input
         autoFocus
-        onSubmitCapture={() => inputRef.current?.focus()}
         ref={inputRef}
+        autoComplete="off"
+        autoCorrect="off"
         type="text"
         value={text}
         placeholder="Start typing..."
