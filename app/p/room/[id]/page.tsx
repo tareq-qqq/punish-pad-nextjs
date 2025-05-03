@@ -90,13 +90,11 @@ const Page = () => {
               </div>
             </div>
           ) : (
-            <div className="pb-4">
-              <PhraseInput
-                roomId={params.id}
-                currentPhrase={room.currentPhrase}
-                roomStatus={room.status}
-              />
-            </div>
+            <PhraseInput
+              roomId={params.id}
+              currentPhrase={room.currentPhrase}
+              roomStatus={room.status}
+            />
           )}
         </div>
       </main>
