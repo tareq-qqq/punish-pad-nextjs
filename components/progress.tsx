@@ -26,7 +26,7 @@ const Progress = ({
   }, []);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 px-2">
       <div className="grid grid-cols-2 gap-2">
         <div className="flex items-center justify-center">Hits: {hits}</div>
         <div className="flex items-center justify-center">Misses: {misses}</div>

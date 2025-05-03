@@ -20,7 +20,7 @@ const MessageInput = ({ roomId }: { roomId: string }) => {
     inputRef.current!.focus();
   };
   return (
-    <form className="flex gap-2" onSubmit={handleSubmit}>
+    <form className="flex gap-2 px-2" onSubmit={handleSubmit}>
       <Input
         autoFocus
         ref={inputRef}
