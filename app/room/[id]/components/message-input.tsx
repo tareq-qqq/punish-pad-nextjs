@@ -15,6 +15,7 @@ const MessageInput = ({ roomId }: { roomId: string }) => {
       return;
     }
     socket.emit("punishment-message", roomId, inputRef.current?.value);
+    inputRef.current?.focus();
     setText("");
     // inputRef.current!.value = "";
   };

@@ -46,6 +46,7 @@ const PhraseInput = ({
         ref={inputRef}
         autoComplete="off"
         autoCorrect="off"
+        onBlur={() => inputRef.current?.focus()}
         type="text"
         value={text}
         placeholder="Start typing..."
