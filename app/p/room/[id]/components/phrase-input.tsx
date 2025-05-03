@@ -44,6 +44,7 @@ const PhraseInput = ({
     <form className="flex gap-2 px-2" onSubmit={handleSubmit}>
       <Input
         autoFocus
+        onSubmitCapture={() => inputRef.current?.focus()}
         ref={inputRef}
         type="text"
         value={text}

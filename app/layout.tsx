@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Punish Pad",
   description: "",
+  
 };
 
 export default function RootLayout({
