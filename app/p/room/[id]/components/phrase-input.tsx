@@ -30,6 +30,7 @@ const PhraseInput = ({
   });
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    inputRef.current?.focus();
     const value = inputRef.current?.value;
     if (value?.trim() === "" || !value) {
       return;
@@ -46,7 +47,6 @@ const PhraseInput = ({
         ref={inputRef}
         autoComplete="off"
         autoCorrect="off"
-        onBlur={() => inputRef.current?.focus()}
         type="text"
         value={text}
         placeholder="Start typing..."
@@ -56,7 +56,7 @@ const PhraseInput = ({
         }}
         disabled={roomStatus === "finished"}
       />
-      <Button type="submit">
+      <Button type="submit" onClick={() => inputRef.current?.focus()}>
         <span className="hidden md:block">Send</span>
         <span className="block">
           <Send />

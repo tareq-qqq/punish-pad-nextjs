@@ -81,7 +81,7 @@ const Page = () => {
 
           <Messages />
 
-          <div className="mb-4">
+          <div className="pb-4">
             {room?.status === "finished" ? (
               <div className="rounded-lg bg-green-50 p-3 text-center dark:bg-green-950">
                 <p className="text-sm text-green-700 dark:text-green-300">
