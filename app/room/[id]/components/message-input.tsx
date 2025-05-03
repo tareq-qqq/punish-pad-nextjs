@@ -2,14 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import socket from "@/lib/socket";
 import { Send } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const MessageInput = ({ roomId }: { roomId: string }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [text, setText] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     inputRef.current?.focus();
     const value = inputRef.current?.value;
     if (value?.trim() === "" || !value) {
@@ -18,15 +17,24 @@ const MessageInput = ({ roomId }: { roomId: string }) => {
     socket.emit("punishment-message", roomId, inputRef.current?.value);
     setText("");
   };
+
+  useEffect(() => {
+    const input = inputRef.current;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        handleSubmit();
+      }
+    };
+    input?.addEventListener("keydown", onKeyDown);
+    return () => {
+      input?.removeEventListener("keydown", onKeyDown);
+    };
+  });
+
   return (
-    <form
-      className="flex gap-2 px-2"
-      onSubmit={handleSubmit}
-      autoComplete="off"
-    >
+    <div className="flex gap-2 px-2">
       <Input
         autoFocus
-        name="message"
         ref={inputRef}
         type="text"
         value={text}
@@ -35,13 +43,13 @@ const MessageInput = ({ roomId }: { roomId: string }) => {
           setText(e.target.value);
         }}
       />
-      <Button type="submit">
+      <Button type="button" onClick={handleSubmit}>
         <span className="hidden md:block">Send</span>
         <span className="block">
           <Send />
         </span>
       </Button>
-    </form>
+    </div>
   );
 };
 export default MessageInput;
