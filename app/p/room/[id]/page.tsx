@@ -81,21 +81,19 @@ const Page = () => {
 
           <Messages />
 
-          <div className="pb-4">
-            {room?.status === "finished" ? (
-              <div className="rounded-lg bg-green-50 p-3 text-center dark:bg-green-950">
-                <p className="text-sm text-green-700 dark:text-green-300">
-                  You&apos;re done! Wait for your owner to create a new room.
-                </p>
-              </div>
-            ) : (
-              <PhraseInput
-                roomId={params.id}
-                currentPhrase={room.currentPhrase}
-                roomStatus={room.status}
-              />
-            )}
-          </div>
+          {room?.status === "finished" ? (
+            <div className="rounded-lg bg-green-50 p-3 pb-4 text-center dark:bg-green-950">
+              <p className="text-sm text-green-700 dark:text-green-300">
+                You&apos;re done! Wait for your owner to create a new room.
+              </p>
+            </div>
+          ) : (
+            <PhraseInput
+              roomId={params.id}
+              currentPhrase={room.currentPhrase}
+              roomStatus={room.status}
+            />
+          )}
         </div>
       </main>
     </ScrollArea>

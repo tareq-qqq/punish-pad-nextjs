@@ -19,7 +19,7 @@ const MessageInput = ({ roomId }: { roomId: string }) => {
     setText("");
   };
   return (
-    <form className="flex items-center gap-2 px-2" onSubmit={handleSubmit}>
+    <form className="flex items-stretch gap-2 px-2" onSubmit={handleSubmit}>
       <Textarea
         autoFocus
         ref={inputRef}
@@ -29,9 +29,10 @@ const MessageInput = ({ roomId }: { roomId: string }) => {
           setText(e.target.value);
         }}
         className="max-h-24 min-h-10 resize-none"
+        rows={1}
       />
 
-      <Button type="submit" className="h-10 self-end">
+      <Button type="submit" className="h-full min-h-10">
         <span className="hidden md:block">Send</span>
         <span className="block">
           <Send />

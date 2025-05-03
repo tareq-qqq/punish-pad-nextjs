@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import socket from "@/lib/socket";
 import { Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -13,7 +13,7 @@ const PhraseInput = ({
   currentPhrase: string;
   roomStatus: string;
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [text, setText] = useState<string>(currentPhrase);
 
   useEffect(() => {
@@ -41,13 +41,15 @@ const PhraseInput = ({
     // inputRef.current!.value = "";
   };
   return (
-    <form className="flex gap-2 px-2" onSubmit={handleSubmit}>
-      <Input
+    <form
+      className="flex items-stretch gap-2 px-2 pb-4"
+      onSubmit={handleSubmit}
+    >
+      <Textarea
         autoFocus
         ref={inputRef}
         autoComplete="off"
         autoCorrect="off"
-        type="text"
         value={text}
         placeholder="Start typing..."
         onChange={(e) => {
@@ -55,8 +57,14 @@ const PhraseInput = ({
           socket.emit("typing", roomId, e.target.value);
         }}
         disabled={roomStatus === "finished"}
+        className="max-h-24 min-h-10 resize-none"
+        rows={1}
       />
-      <Button type="submit" onClick={() => inputRef.current?.focus()}>
+      <Button
+        className="h-full min-h-10"
+        type="submit"
+        onClick={() => inputRef.current?.focus()}
+      >
         <span className="hidden md:block">Send</span>
         <span className="block">
           <Send />
