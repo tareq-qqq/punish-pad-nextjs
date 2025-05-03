@@ -50,9 +50,17 @@ const PhraseInput = ({
         ref={inputRef}
         autoComplete="off"
         autoCorrect="off"
+        onPaste={() => {
+          return null;
+        }}
+        onContextMenu={() => {
+          return null;
+        }}
         value={text}
         placeholder="Start typing..."
         onChange={(e) => {
+          // prevent copy pasting
+          if (e.target.value.length - text.length > 1) return;
           setText(e.target.value);
           socket.emit("typing", roomId, e.target.value);
         }}
