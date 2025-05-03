@@ -41,10 +41,7 @@ const PhraseInput = ({
     // inputRef.current!.value = "";
   };
   return (
-    <form
-      className="flex items-stretch gap-2 px-2 pb-4"
-      onSubmit={handleSubmit}
-    >
+    <form className="flex items-stretch gap-2 px-2" onSubmit={handleSubmit}>
       <Textarea
         autoFocus
         ref={inputRef}
