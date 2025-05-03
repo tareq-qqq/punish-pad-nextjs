@@ -57,8 +57,8 @@ const Page = () => {
   }
 
   return (
-    <ScrollArea className="h-screen px-4">
-      <main className="bg-background h-screen pt-4">
+    <ScrollArea className="h-dvh px-4">
+      <main className="bg-background h-dvh pt-4">
         <div className="container mx-auto grid h-full max-w-2xl grid-rows-[auto_1fr_auto]">
           <div>
             <Goal
