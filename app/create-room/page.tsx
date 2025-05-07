@@ -8,8 +8,12 @@ import { useRouter } from "next/navigation";
 import { Room } from "@/lib/types";
 import { useRoom } from "@/providers/room-provider";
 import socket from "@/lib/socket";
+import { Switch } from "@/components/ui/switch";
+import useNotificationPermissionStatus from "@/lib/firebase/hooks/useNotificationPermission";
 
 const Page = () => {
+  const permission = useNotificationPermissionStatus();
+  console.log("permission", permission);
   const router = useRouter();
   const {
     state: { setRoom },
@@ -32,6 +36,7 @@ const Page = () => {
     socket.emit("create-room", formData, ({ room }: { room: Room }) => {
       console.log(room);
       if (room) {
+        console.log("ack");
         setRoom(room);
         setError(null);
         router.push(`/link/${room.roomId}`);
@@ -110,6 +115,31 @@ const Page = () => {
               required
             />
           </div>
+
+          {permission === "denied" ? (
+            <div>
+              <p className="-foreground text-sm">
+                {" "}
+                You have blocked notifications. Enable them to get notified when
+                your partner has finished punishment
+              </p>
+            </div>
+          ) : (
+            permission === "default" && (
+              <div className="flex items-center justify-between gap-2">
+                <Label htmlFor="notifications">
+                  Get notified when your partner has finished punishment?
+                </Label>
+                <Switch
+                  id="notifications"
+                  onCheckedChange={(c) => {
+                    console.log(c);
+                    if (c) Notification.requestPermission();
+                  }}
+                />
+              </div>
+            )
+          )}
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? "Creating Room..." : "Create Room"}

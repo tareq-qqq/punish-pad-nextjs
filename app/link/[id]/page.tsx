@@ -5,9 +5,12 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Copy, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import useFCMToken from "@/lib/firebase/hooks/useFCMToken";
 
 // check later if the room is not available to show an error
 const Page = () => {
+  const token = useFCMToken();
+  console.log(token);
   const params = useParams<{ id: string }>();
   const router = useRouter();
   const { id } = params;
