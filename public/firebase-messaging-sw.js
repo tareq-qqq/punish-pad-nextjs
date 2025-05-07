@@ -32,38 +32,4 @@ messaging.onBackgroundMessage((payload) => {
     "[firebase-messaging-sw.js] Received background message ",
     payload,
   );
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: payload.notification.image,
-    data: {
-      url: payload.data?.url || "/",
-    },
-  };
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
 });
-
-self.addEventListener("notificationclick", function (event) {
-  event.notification.close();
-
-  const urlToOpen = event.notification.data?.url || "/";
-
-  event.waitUntil(
-    clients
-      .matchAll({ type: "window", includeUncontrolled: true })
-      .then((windowClients) => {
-        for (const client of windowClients) {
-          if (client.url === urlToOpen && "focus" in client) {
-            return client.focus();
-          }
-        }
-        if (clients.openWindow) {
-          return clients.openWindow(urlToOpen);
-        }
-      }),
-  );
-});
-
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.

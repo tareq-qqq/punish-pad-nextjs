@@ -9,14 +9,15 @@ import useFCMToken from "@/lib/firebase/hooks/useFCMToken";
 
 // check later if the room is not available to show an error
 const Page = () => {
-  const token = useFCMToken();
-  console.log(token);
   const params = useParams<{ id: string }>();
+  const token = useFCMToken(params.id);
+  console.log(token);
   const router = useRouter();
   const { id } = params;
   const [isCopying, setIsCopying] = useState(false);
   const {
     errorState: { error },
+    state: { room },
   } = useRoom(id);
 
   const fullUrl = `${window.location.origin}/p/room/${id}`;
@@ -43,6 +44,16 @@ const Page = () => {
       }
     });
   }, [id, router]);
+
+  if (!room && !error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-muted-foreground text-lg font-medium">
+          Loading...
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     return (
