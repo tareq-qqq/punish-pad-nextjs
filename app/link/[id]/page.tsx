@@ -19,12 +19,12 @@ const Page = () => {
     errorState: { error },
     state: { room },
   } = useRoom(id);
-
-  const fullUrl = `${window.location.origin}/p/room/${id}`;
+  const [fullUrl, setFullUrl] = useState<string | null>(null);
 
   const copyToClipboard = async () => {
     try {
       setIsCopying(true);
+      if (!fullUrl) return;
       await navigator.clipboard.writeText(fullUrl);
       toast.success("Link copied to clipboard!");
     } catch (err) {
@@ -36,6 +36,10 @@ const Page = () => {
   };
 
   useEffect(() => {
+    setFullUrl(`${window.location.origin}/p/room/${id}`);
+  }, [id]);
+
+  useEffect(() => {
     socket.on("joined-room", (room: string, socketId: string) => {
       console.log(room, socketId);
       if (room === id) {
@@ -45,7 +49,7 @@ const Page = () => {
     });
   }, [id, router]);
 
-  if (!room && !error) {
+  if ((!room && !error) || !fullUrl) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-muted-foreground text-lg font-medium">

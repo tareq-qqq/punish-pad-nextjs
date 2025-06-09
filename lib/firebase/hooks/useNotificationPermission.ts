@@ -7,9 +7,10 @@ const useNotificationPermissionStatus = () => {
   >();
 
   useEffect(() => {
+    if (!window.Notification) return;
     const handler = () => {
       console.log("handler");
-      setPermission(Notification.permission);
+      setPermission(window.Notification.permission);
     };
     handler();
 
